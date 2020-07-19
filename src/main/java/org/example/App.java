@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.composite.Housing;
+import org.example.composite.IStructure;
+import org.example.composite.Room;
 import org.example.facade.BankService;
 
 import java.math.BigDecimal;
@@ -21,5 +24,30 @@ public class App
 
         // transfer money from saving account to investment account through facade class
         bankService.transfer( savingAccountNo, investmentAccountNo, BigDecimal.valueOf( 300 ) );
+
+
+        /* composite design pattern */
+        // create whole building and add floor
+        Housing building = new Housing( "Building 1" );
+        Housing floor = new Housing( "Floor 1" );
+        int floorNumber = building.addStructure( floor );
+
+        // create rooms
+        Room emergencyRoom = new Room();
+        Room bedRoom = new Room();
+        Room kitchen = new Room();
+
+        // add rooms into building level  and floor  level
+        int emgRoomNo = building.addStructure( emergencyRoom );
+        int bedRoomNo = floor.addStructure( bedRoom );
+        int kitchenNo = floor.addStructure( kitchen );
+
+        building.enter();
+        Housing firstFloor = ( Housing ) building.getStructure( floorNumber );
+        firstFloor.enter();
+        Room currentRoom = ( Room ) firstFloor.getStructure( bedRoomNo );
+        currentRoom.enter();
+
+
     }
 }
