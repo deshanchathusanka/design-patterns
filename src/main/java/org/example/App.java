@@ -3,6 +3,10 @@ package org.example;
 import org.example.composite.Housing;
 import org.example.composite.IStructure;
 import org.example.composite.Room;
+import org.example.decorator.AuthenticatedWebPage;
+import org.example.decorator.AuthorizedWebPage;
+import org.example.decorator.BasicWebPage;
+import org.example.decorator.WebPage;
 import org.example.facade.BankService;
 
 import java.math.BigDecimal;
@@ -47,6 +51,12 @@ public class App
         firstFloor.enter();
         Room currentRoom = ( Room ) firstFloor.getStructure( bedRoomNo );
         currentRoom.enter();
+
+        /* decorator design pattern */
+        WebPage webPage = new BasicWebPage(); // 1st : Basic behaviour
+        webPage = new AuthorizedWebPage( webPage );// 2nd : Authorize behavior
+        webPage = new AuthenticatedWebPage( webPage );// 3rd Authenticating behaviour
+        webPage.display();
 
 
     }
